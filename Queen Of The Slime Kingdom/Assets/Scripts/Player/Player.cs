@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
         stateMachine.ChangeState(stateMachine.MovingState);
     }
 
+    // 충돌이 아닌, Raycast로 몬스터를 감지했을 때, 공격 메서드 실행
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.collider.CompareTag("Monster"))
