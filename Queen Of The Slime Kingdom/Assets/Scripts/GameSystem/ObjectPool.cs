@@ -26,6 +26,7 @@ public class ObjectPool : MonoBehaviour
             {
                 GameObject obj = Instantiate(pool.prefab);
                 obj.SetActive(false); // 비활성화
+                obj.transform.SetParent(transform); // ObjectPool의 자식으로 설정
                 objectPool.Enqueue(obj); // 큐에 추가
             }
             PoolDictionary.Add(pool.tag, objectPool); // 딕셔너리에 추가
@@ -57,6 +58,7 @@ public class ObjectPool : MonoBehaviour
     public void ReturnToPool(GameObject obj)
     {
         obj.SetActive(false);
+        obj.transform.SetParent(transform);
 
         // 오브젝트의 태그를 기준으로 딕셔너리에서 찾아서 넣어주기
         string objTag = obj.tag;

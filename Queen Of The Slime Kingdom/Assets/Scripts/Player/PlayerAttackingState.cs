@@ -23,7 +23,6 @@ public class PlayerAttackingState : IState
 
     private IEnumerator Attack()
     {
-        Debug.Log("몬스터를 공격합니다!");
         yield return new WaitForSeconds(stateMachine.AttackInterval);
     }
 }

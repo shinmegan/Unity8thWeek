@@ -30,14 +30,16 @@ public class Player : MonoBehaviour
     {
         if(collision.collider.CompareTag("Monster"))
         {
-            Debug.Log("Collision with Monster"); // 몬스터와 충돌 감지 로그
             collisionCount++; // 충돌 횟수 증가
 
             if (collisionCount >= maxCollisionCount)
             {
-                collisionCount = 0; // 충돌 횟수 초기화
                 Debug.Log($"몬스터 사망");
+                // 몬스터 풀로 반환
+                GameManager.Instance.ObjectPool.ReturnToPool(collision.gameObject);
+                collisionCount = 0; // 충돌 횟수 초기화
                 stateMachine.ChangeState(stateMachine.MovingState);
+                
             }
             else
             {
@@ -50,7 +52,6 @@ public class Player : MonoBehaviour
 
     private IEnumerator PushBackCoroutine()
     {
-        Debug.Log("PushBack");
         Vector3 pushDirection = new Vector3(0, 0, -1);
         rb.AddForce(pushDirection * pushBackForce, ForceMode.Impulse);
 

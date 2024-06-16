@@ -19,7 +19,6 @@ public class PlayerMovingState : IState
 
     public void Exit()
     {
-        Debug.Log("MoveStop");
         StopMoveCoroutine();
     }
 
