@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer.Internal;
 using UnityEngine;
 
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviour, IDamagable
 {
     [SerializeField] private string monsterTag = "Monster";
     [SerializeField] private float initialZ = 25.08f;
-    [SerializeField] private float minZIncrement = 20f;
+    [SerializeField] private float minZIncrement = 10f;
     [SerializeField] private float maxZIncrement = 35f;
-    [SerializeField] private float minX = 13.45f;
-    [SerializeField] private float maxX = 18.9f;
-    public float spawnInterval = 3f; // 몬스터 생성 간격 (초 단위)
+    public int currentStage = 1; // 현재 스테이지 정보
+    public MonsterStats stats;
+    public int currentHealth; // 현재 체력
 
     private float currentZ;
     private float timeSinceLastSpawn;
@@ -24,36 +25,55 @@ public class Monster : MonoBehaviour
         currentZ = initialZ;
         timeSinceLastSpawn = 0f;
 
+        InitializeMonster();
+
         // 초기 몬스터 생성
-        Vector3 initialPosition = new Vector3(Random.Range(minX, maxX), 2.86f, currentZ);
+        Vector3 initialPosition = new Vector3(17.42f, 2.86f, currentZ);
         SpawnMonster(initialPosition);
     }
 
+
     void Update()
     {
-        timeSinceLastSpawn += Time.deltaTime;
-
-        if (timeSinceLastSpawn >= spawnInterval)
-        {
-            UpdateNextSpawnPosition();
-            timeSinceLastSpawn = 0f;
-        }
-        // 몬스터 반환 조건
+        UpdateMonsterSpawn();
     }
 
     void SpawnMonster(Vector3 spawnPosition)
     {
         GameObject monster = objectPool.SpawnFromPool(monsterTag, spawnPosition, Quaternion.identity);
+        InitializeMonster();
     }
 
     void UpdateNextSpawnPosition()
     {
         float zIncrement = Random.Range(minZIncrement, maxZIncrement);
-        float posX = Random.Range(minX, maxX);
+        float posX = 17.42f;
         currentZ += zIncrement;
         Vector3 nextPosition = new Vector3(posX, 2.86f, currentZ);
         SpawnMonster(nextPosition);
     }
 
-    // 몬스터 반환 및 새로운 몬스터 생성 메서드
+    public void TakeDamage(int damageAmount)
+    {
+        currentHealth -= damageAmount;
+    }
+
+    public void InitializeMonster()
+    {
+        currentHealth = stats.defaltsMaxHP;
+    }
+
+    private void UpdateMonsterSpawn()
+    {
+        // 몬스터 풀에서 비활성화된 몬스터가 있는지 확인
+        var monsterQueue = GameManager.Instance.ObjectPool.PoolDictionary[monsterTag];
+        var monsterArray = monsterQueue.ToArray();
+        foreach (GameObject monster in monsterArray)
+        {
+            if (!monster.activeInHierarchy)
+            {
+                UpdateNextSpawnPosition();
+            }
+        }
+    }
 }

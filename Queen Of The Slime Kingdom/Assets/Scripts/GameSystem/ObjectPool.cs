@@ -45,11 +45,17 @@ public class ObjectPool : MonoBehaviour
 
         // 오브젝트 풀에서 오브젝트 가져오기
         GameObject obj = PoolDictionary[tag].Dequeue();
-        obj.SetActive(true); // 활성화
         obj.transform.position = position;
         obj.transform.rotation = rotation;
-
         PoolDictionary[tag].Enqueue(obj);
+        obj.SetActive(true); // 활성화
+
+        // 오브젝트 초기화 호출
+        var monsterComponent = obj.GetComponent<Monster>();
+        if (monsterComponent != null)
+        {
+            monsterComponent.InitializeMonster();
+        }
 
         return obj;
     }
@@ -70,5 +76,25 @@ public class ObjectPool : MonoBehaviour
         {
             Debug.LogWarning($"Object with tag {objTag} cannot be returned to pool");
         }
+    }
+
+    // 비활성화된 오브젝트가 있는지 확인하는 메서드
+    public bool HasInactiveObject(string tag)
+    {
+        if (!PoolDictionary.ContainsKey(tag))
+        {
+            Debug.LogWarning($"Pool with tag {tag} does not exist.");
+            return false;
+        }
+
+        foreach (var obj in PoolDictionary[tag])
+        {
+            if (!obj.activeInHierarchy)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

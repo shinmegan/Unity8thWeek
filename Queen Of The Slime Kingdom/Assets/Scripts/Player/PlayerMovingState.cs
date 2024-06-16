@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Threading;
 using UnityEngine;
 
 // 이동 상태 클래스

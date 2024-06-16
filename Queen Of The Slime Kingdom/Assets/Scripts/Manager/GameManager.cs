@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public Transform PlayerTransform { get; private set; } // 플레이어
     public ObjectPool ObjectPool { get; private set; } // 오브젝트 풀
     [SerializeField] private string playerTag = "Player";
+    public int currentStage = 1; // 현재 스테이지 정보
 
     private void Awake()
     {
@@ -30,5 +31,25 @@ public class GameManager : MonoBehaviour
 
         // Pool 정보 설정
         ObjectPool.Initialize(); // 오브젝트 풀 초기화
+    }
+
+    public void AdvanceToNextStage()
+    {
+        currentStage++;
+        UpdateMonsterStatsForStage(currentStage);
+    }
+
+    private void UpdateMonsterStatsForStage(int stage)
+    {
+        Monster[] monsters = FindObjectsOfType<Monster>();
+        foreach (var monster in monsters)
+        {
+            //monster.currentStage = stage;
+            //var stageStats = monster.stats.GetStatsForStage(stage);
+            //monster.stats.defaultHP = stageStats.HP;
+            //monster.stats.defaultAttackPower = stageStats.attackPower;
+            //monster.stats.defaultAttackSpeed = stageStats.attackSpeed;
+            //monster.stats.defaultMoveSpeed = stageStats.moveSpeed;
+        }
     }
 }
