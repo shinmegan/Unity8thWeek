@@ -15,7 +15,6 @@ public class Player : MonoBehaviour
     public int attackPower; // 공격력
 
     [Header("UI")]
-    public Transform healthBarTransform; // 체력 바의 Transform
     public Coin coin; // 코인 재화
     public TextMeshProUGUI damageTextInstance;
 

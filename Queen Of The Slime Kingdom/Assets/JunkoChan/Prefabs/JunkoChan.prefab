@@ -1362,11 +1362,10 @@ MonoBehaviour:
   detectionRadius: 10
   detectionAngle: 60
   attackPower: 0
-  healthBarTransform: {fileID: 0}
   coin: {fileID: 0}
   damageTextInstance: {fileID: 8384205410518439701}
   stats: {fileID: 11400000, guid: 4c27a6651eb23e8468c1447450051885, type: 2}
-  condition: {fileID: 0}
+  condition: {fileID: 2194098985428980424}
   currentExperience: 0
   maxExperience: 1000
   getExpAmount: 100
@@ -1385,7 +1384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc8fac7742af7de4d96ca5ef7f892e00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiCondition: {fileID: 0}
+  uiCondition: {fileID: 6751613999801186898}
 --- !u!1 &1356515299880886
 GameObject:
   m_ObjectHideFlags: 0
