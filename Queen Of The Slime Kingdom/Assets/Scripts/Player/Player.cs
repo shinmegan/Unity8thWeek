@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public int attackPower; // 공격력
     public TextMeshProUGUI damageTextPrefab; // 데미지 텍스트 프리팹
     public Transform healthBarTransform; // 체력 바의 Transform
+    public Coin coin; // 코인 재화
 
     public PlayerStats stats;
     public PlayerCondition condition;
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour
             if (monster.currentHealth <= 0)
             {
                 Debug.Log($"몬스터 사망");
+                coin.isCoinReady = true; // 동전 10개 생성 및 애니메이션 실행
                 // 몬스터 풀로 반환
                 GameManager.Instance.ObjectPool.ReturnToPool(collision.gameObject);
                 monster.activeMonsters.Remove(collision.gameObject);
@@ -64,7 +66,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator PushBackCoroutine()
     {
-        Vector3 pushDirection = new Vector3(0, 0, -1f);
+        Vector3 pushDirection = new Vector3(0, 0, -1.5f);
         rb.AddForce(pushDirection * pushBackForce, ForceMode.Impulse);
 
         // 일정 시간 동안 대기 (밀려나는 동작이 완료될 때까지)

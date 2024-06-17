@@ -1,49 +1,47 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
     public TextMeshProUGUI moneyText; // MoneyPanel의 텍스트
-    public Transform moneyPanelTransform; // MoneyPanel의 Transform
-    public int coinValue = 10; // 동전 가치
+    public int coinValue = 100; // 동전 가치
+    public GameObject coin;
+    public bool isCoinReady;
 
-    public void SpawnAndAnimateCoins(Vector3 spawnPosition, int coinCount)
+    private void Update()
     {
-        for (int i = 0; i < coinCount; i++)
+        if (isCoinReady)
         {
-            Vector3 randomOffset = Random.insideUnitSphere * 0.5f; // 주위에 뿌릴 위치 계산
-            randomOffset.y = 0; // y축 이동 방지
-            Vector3 coinPosition = spawnPosition + randomOffset;
-            GameObject coin = GameManager.Instance.ObjectPool.SpawnFromPool("Coin", coinPosition, Quaternion.identity);
-            StartCoroutine(AnimateCoin(coin));
+            ActivateCoin();
         }
     }
 
-    private IEnumerator AnimateCoin(GameObject coin)
+    public void ActivateCoin()
     {
-        Vector3 startPosition = coin.transform.position;
-        Vector3 endPosition = moneyPanelTransform.position;
-        float duration = 1f;
-        float elapsedTime = 0f;
+        coin.SetActive(true);
+        StartCoroutine(DeactivateCoinAfterTime(1f)); // 1초 후에 비활성화
+        isCoinReady = false;
+    }
 
-        while (elapsedTime < duration)
-        {
-            coin.transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / duration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        coin.transform.position = endPosition;
-        GameManager.Instance.ObjectPool.ReturnToPool(coin);
+    private IEnumerator DeactivateCoinAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        coin.SetActive(false);
         UpdateMoneyText();
     }
 
     private void UpdateMoneyText()
     {
-        int currentMoney = int.Parse(moneyText.text);
-        currentMoney += coinValue;
-        moneyText.text = currentMoney.ToString();
+        if (int.TryParse(moneyText.text, out int currentMoney))
+        {
+            currentMoney += coinValue;
+            moneyText.text = currentMoney.ToString();
+        }
+        else
+        {
+            Debug.LogWarning("Money text is not a valid number.");
+            moneyText.text = coinValue.ToString();
+        }
     }
 }

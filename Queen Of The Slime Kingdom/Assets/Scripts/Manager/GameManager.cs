@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     public Transform PlayerTransform { get; private set; } // 플레이어
     public ObjectPool ObjectPool { get; private set; } // 오브젝트 풀
+    public Coin coin;
     [SerializeField] private string playerTag = "Player";
     public int currentStage = 1; // 현재 스테이지 정보
 
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
 
         // Pool 정보 설정
         ObjectPool.Initialize(); // 오브젝트 풀 초기화
+        coin = FindObjectOfType<Coin>(); // 코인 초기화
     }
 
     public void AdvanceToNextStage()
