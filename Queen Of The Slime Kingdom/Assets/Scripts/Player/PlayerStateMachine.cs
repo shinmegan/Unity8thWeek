@@ -8,6 +8,7 @@ public class PlayerStateMachine : StateMachine
     // States
     public PlayerMovingState MovingState { get; }
     public PlayerAttackingState AttackingState { get; }
+    public PlayerChasingState ChasingState { get; }
 
     public float MoveSpeed { get; }
     public float AttackInterval { get; }
@@ -21,6 +22,7 @@ public class PlayerStateMachine : StateMachine
 
         MovingState = new PlayerMovingState(this);
         AttackingState = new PlayerAttackingState(this);
+        ChasingState = new PlayerChasingState(this);
     }
 }
 

@@ -28,8 +28,31 @@ public class PlayerMovingState : IState
         while (true)
         {
             stateMachine.Player.transform.Translate(Vector3.forward * stateMachine.MoveSpeed * Time.deltaTime);
+
+            // 몬스터 감지 후 ChasingState로 전환
+            if (DetectMonster())
+            {
+                stateMachine.ChangeState(stateMachine.ChasingState);
+                yield break;
+            }
+
             yield return null;
         }
+    }
+
+    private bool DetectMonster()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(stateMachine.Player.transform.position, stateMachine.Player.detectionRadius, LayerMask.GetMask("Monster"));
+        foreach (var hitCollider in hitColliders)
+        {
+            Vector3 directionToMonster = hitCollider.transform.position - stateMachine.Player.transform.position;
+            float angle = Vector3.Angle(stateMachine.Player.transform.forward, directionToMonster);
+            if (angle < stateMachine.Player.detectionAngle / 2)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void StartMoveCoroutine()
