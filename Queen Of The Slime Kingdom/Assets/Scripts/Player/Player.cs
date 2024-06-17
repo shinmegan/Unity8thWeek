@@ -15,9 +15,9 @@ public class Player : MonoBehaviour
     public int attackPower; // 공격력
 
     [Header("UI")]
-    public TextMeshProUGUI damageTextPrefab; // 데미지 텍스트 프리팹
     public Transform healthBarTransform; // 체력 바의 Transform
     public Coin coin; // 코인 재화
+    public TextMeshProUGUI damageTextInstance;
 
     [Header("Class")]
     public PlayerStats stats;
@@ -106,21 +106,18 @@ public class Player : MonoBehaviour
 
     private void ShowDamageText(int damageAmount)
     {
-        // 데미지 텍스트 인스턴스화 및 설정
-        Vector3 textPosition = healthBarTransform.position;
-        textPosition.y += 110; // Top에서 110 위치로 설정
-        TextMeshProUGUI damageTextInstance = Instantiate(damageTextPrefab, textPosition, Quaternion.identity, healthBarTransform);
+        // 데미지 텍스트 표시
         damageTextInstance.text = "- " + damageAmount.ToString();
         damageTextInstance.gameObject.SetActive(true);
 
         // 일정 시간 후에 텍스트 제거
-        StartCoroutine(RemoveDamageText(damageTextInstance));
+        StartCoroutine(OffDamageText(damageTextInstance));
     }
 
-    private IEnumerator RemoveDamageText(TextMeshProUGUI damageTextInstance)
+    private IEnumerator OffDamageText(TextMeshProUGUI damageTextInstance)
     {
         yield return new WaitForSeconds(0.5f); 
-        Destroy(damageTextInstance.gameObject);
+       damageTextInstance.gameObject.SetActive(false);
     }
 
     // UI 업데이트 메서드들은 GameManager에서 호출
