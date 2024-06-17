@@ -15,16 +15,20 @@ MonoBehaviour:
   defaultHP: 10
   defaltsMaxHP: 10
   defaultAttackPower: 3
+  defaultInitialAttackPower: 3
   stageSpecificStats:
   - stage: 1
     maxHealth: 10
     currentHealth: 0
     attackPower: 3
+    initialAttackPower: 3
   - stage: 2
     maxHealth: 20
     currentHealth: 0
     attackPower: 5
+    initialAttackPower: 5
   - stage: 3
     maxHealth: 40
     currentHealth: 0
     attackPower: 8
+    initialAttackPower: 8

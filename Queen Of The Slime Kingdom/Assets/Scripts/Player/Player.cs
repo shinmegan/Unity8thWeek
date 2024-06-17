@@ -30,9 +30,11 @@ public class Player : MonoBehaviour
     public int currentExperience;
     public int maxExperience = 1000;
     public int getExpAmount = 100;
-    public int level = 1; // 플레이어 레벨
+    public int level; // 플레이어 레벨
     public Slider experienceSlider; // 경험치 바 Slider
     public TextMeshProUGUI levelText; // 레벨 텍스트 Text
+
+    private int initialMaxHp; // 초기 최대 체력 저장
 
     private void Awake()
     {
@@ -43,9 +45,11 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         attackPower = stats.attackPower;
         currentExperience = 0;
+        level = 1;
 
-        // 초기 최대 체력 설정
-        condition.SetMaxHealth(stats.maxHp);
+        // 초기 최대 체력 저장 및 설정
+        initialMaxHp = stats.startHp;
+        condition.SetMaxHealth(initialMaxHp);
 
         UpdateExperienceUI();
         UpdateLevelUI();
@@ -53,6 +57,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        InitializePlayerStats(); // 게임 시작 시 초기화 메서드 호출
         stateMachine.ChangeState(stateMachine.MovingState);
         monster = FindObjectOfType<Monster>();
     }
@@ -136,6 +141,21 @@ public class Player : MonoBehaviour
         stats.IncreaseMaxHpOnLevelUp(); // 최대 체력 증가
         condition.SetMaxHealth(stats.maxHp); // Condition의 maxValue 업데이트 및 현재 체력 회복
         Debug.Log($"레벨 업! 새로운 최대 체력: {stats.maxHp}");
+        if (monster != null)
+        {
+            monster.UpdateAttackPower(); // 레벨업 시 몬스터 공격력 업데이트
+        }
+    }
+
+    // 게임 시작 시 초기화 메서드
+    public void InitializePlayerStats()
+    {
+        stats.maxHp = initialMaxHp; // 초기 최대 체력으로 재설정
+        condition.SetMaxHealth(initialMaxHp); // Condition의 maxValue 업데이트 및 현재 체력 회복
+        currentExperience = 0;
+        level = 1;
+        UpdateExperienceUI();
+        UpdateLevelUI();
     }
 }
 
