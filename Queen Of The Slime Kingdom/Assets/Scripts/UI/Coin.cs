@@ -9,6 +9,13 @@ public class Coin : MonoBehaviour
     public GameObject coin;
     public bool isCoinReady;
 
+    private Store store;
+
+    private void Start()
+    {
+        store = FindObjectOfType<Store>();
+    }
+
     private void Update()
     {
         if (isCoinReady)
@@ -37,11 +44,6 @@ public class Coin : MonoBehaviour
         {
             currentMoney += coinValue;
             moneyText.text = currentMoney.ToString();
-        }
-        else
-        {
-            Debug.LogWarning("Money text is not a valid number.");
-            moneyText.text = coinValue.ToString();
         }
     }
 }
