@@ -42,6 +42,8 @@ public class Player : MonoBehaviour
                 Debug.Log($"몬스터 사망");
                 // 몬스터 풀로 반환
                 GameManager.Instance.ObjectPool.ReturnToPool(collision.gameObject);
+                monster.activeMonsters.Remove(collision.gameObject);
+                monster.UpdateMonsterSpawn();
                 stateMachine.ChangeState(stateMachine.MovingState);
             }
             else

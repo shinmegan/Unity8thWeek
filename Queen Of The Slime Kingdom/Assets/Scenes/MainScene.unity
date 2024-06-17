@@ -2557,7 +2557,6 @@ GameObject:
   - component: {fileID: 1387362740}
   - component: {fileID: 1387362741}
   - component: {fileID: 1387362743}
-  - component: {fileID: 1387362742}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -2701,18 +2700,6 @@ MonoBehaviour:
   attackPower: 0
   stats: {fileID: 11400000, guid: 4c27a6651eb23e8468c1447450051885, type: 2}
   condition: {fileID: 0}
---- !u!114 &1387362742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1387362735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61d0002f3aef5774b88d735b43cd848b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1387362743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3046,7 +3033,7 @@ MonoBehaviour:
     size: 3
   - tag: Monster
     prefab: {fileID: 1559091256891357015, guid: c2f2f5eb3d6e326479ab65c50fc4ae48, type: 3}
-    size: 5
+    size: 3
 --- !u!1 &1516216404
 GameObject:
   m_ObjectHideFlags: 0
@@ -4171,10 +4158,11 @@ MonoBehaviour:
   initialZ: 25.08
   minZIncrement: 10
   maxZIncrement: 30
-  spawnInterval: 2
   currentStage: 1
   stats: {fileID: 11400000, guid: d18f9121ee712dc4eb539454eedf4c15, type: 2}
   currentHealth: 0
+  activeMonsters: []
+  objectPool: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
