@@ -10,9 +10,12 @@ public class Condition : MonoBehaviour
     public float startValue;
     public Slider gaugeSlider;
 
+    public PlayerStats stats;
+
     private void Start()
     {
         curValue = startValue;
+        maxValue = stats.maxHp;
     }
 
     private void Update()
@@ -33,5 +36,11 @@ public class Condition : MonoBehaviour
     public float GetPercentage()
     {
         return curValue / maxValue;
+    }
+
+    // 최대 체력 업데이트 메서드
+    public void SetMaxValue(float value)
+    {
+        maxValue = value;
     }
 }

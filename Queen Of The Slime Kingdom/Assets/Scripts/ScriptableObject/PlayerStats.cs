@@ -7,5 +7,11 @@ public class PlayerStats : ScriptableObject
 {
     public int attackPower;
     public float attackSpeed;
-}
+    public int maxHp; // 최대 체력
 
+    // 레벨업 시 최대 체력 증가
+    public void IncreaseMaxHpOnLevelUp()
+    {
+        maxHp = Mathf.RoundToInt(maxHp * 1.5f); // 기존 최대 체력의 1.5배로 증가
+    }
+}

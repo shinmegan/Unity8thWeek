@@ -38,9 +38,13 @@ public class PlayerCondition : MonoBehaviour, IDamagable
     {
         isDead = true;
         Debug.Log("플레이어가 죽었다.");
-        //deathUIController.ShowDeathUI();
-        //controller.ToggleCursor();
-        //OnDeath?.Invoke();
+    }
+
+    // 최대 체력 설정 메서드
+    public void SetMaxHealth(float maxHp)
+    {
+        hp.SetMaxValue(maxHp);
+        hp.curValue = maxHp; // 최대 체력 설정 후 현재 체력도 초기화
     }
 
 }

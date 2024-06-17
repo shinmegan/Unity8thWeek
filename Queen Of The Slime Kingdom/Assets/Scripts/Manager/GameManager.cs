@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 
     public Transform PlayerTransform { get; private set; } // 플레이어
     public ObjectPool ObjectPool { get; private set; } // 오브젝트 풀
-    public Coin coin;
+    public Coin coin; // 재화
     [SerializeField] private string playerTag = "Player";
     public int currentStage = 1; // 현재 스테이지 정보
 
@@ -52,6 +52,40 @@ public class GameManager : MonoBehaviour
             //monster.stats.defaultAttackPower = stageStats.attackPower;
             //monster.stats.defaultAttackSpeed = stageStats.attackSpeed;
             //monster.stats.defaultMoveSpeed = stageStats.moveSpeed;
+        }
+    }
+
+    // 경험치 획득 메서드
+    public void GainExperience(Player player, int amount)
+    {
+        player.currentExperience += amount;
+
+        // 경험치 바 업데이트
+        player.UpdateExperienceUI();
+
+    }
+
+    // 레벨 업 체크 메서드
+    public void CheckLevelUp(Player player)
+    {
+        if (player.currentExperience >= player.maxExperience)
+        {
+            // 레벨 상승
+            player.level++;
+
+            // 경험치 초기화 및 최대 경험치 증가
+            player.currentExperience = 0;
+            player.maxExperience = Mathf.RoundToInt(player.maxExperience * 1.2f); // 기존 최대 경험치의 1.2배로 증가
+
+            // 플레이어 레벨업 처리
+            player.OnLevelUp();
+
+            // 경험치 바 업데이트
+            player.UpdateExperienceUI();
+
+            // 레벨 UI 업데이트
+            player.UpdateLevelUI();
+
         }
     }
 }
