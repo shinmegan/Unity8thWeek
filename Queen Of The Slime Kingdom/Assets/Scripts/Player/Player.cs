@@ -1,6 +1,8 @@
 ﻿using System.Collections;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class Player : MonoBehaviour
     public float detectionRadius = 11f;
     public float detectionAngle = 60f;
     public int attackPower; // 공격력
+    public TextMeshProUGUI damageTextPrefab; // 데미지 텍스트 프리팹
+    public Transform healthBarTransform; // 체력 바의 Transform
 
     public PlayerStats stats;
     public PlayerCondition condition;
@@ -48,6 +52,8 @@ public class Player : MonoBehaviour
             }
             else
             {
+                condition.TakeDamage(monster.stats.defaultAttackPower); // 몬스터 공격
+                ShowDamageText(monster.stats.defaultAttackPower); // 데미지 텍스트 표시
                 stateMachine.ChangeState(stateMachine.AttackingState);
                 monster.TakeDamage(attackPower);
                 Debug.Log($"몬스터 남은 체력: {monster.currentHealth}");
@@ -66,6 +72,25 @@ public class Player : MonoBehaviour
 
         // 밀려난 후 이동 상태로 전환
         stateMachine.ChangeState(stateMachine.MovingState);
+    }
+
+    private void ShowDamageText(int damageAmount)
+    {
+        // 데미지 텍스트 인스턴스화 및 설정
+        Vector3 textPosition = healthBarTransform.position;
+        textPosition.y += 110; // Top에서 110 위치로 설정
+        TextMeshProUGUI damageTextInstance = Instantiate(damageTextPrefab, textPosition, Quaternion.identity, healthBarTransform);
+        damageTextInstance.text = "- " + damageAmount.ToString();
+        damageTextInstance.gameObject.SetActive(true);
+
+        // 일정 시간 후에 텍스트 제거
+        StartCoroutine(RemoveDamageText(damageTextInstance));
+    }
+
+    private IEnumerator RemoveDamageText(TextMeshProUGUI damageTextInstance)
+    {
+        yield return new WaitForSeconds(0.5f); 
+        Destroy(damageTextInstance.gameObject);
     }
 
 }

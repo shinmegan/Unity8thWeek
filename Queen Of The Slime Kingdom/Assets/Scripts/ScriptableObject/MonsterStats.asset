@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultHP: 10
   defaltsMaxHP: 10
-  defaultAttackPower: 2
+  defaultAttackPower: 3
   stageSpecificStats:
   - stage: 1
     maxHealth: 10
     currentHealth: 0
-    attackPower: 2
+    attackPower: 3
   - stage: 2
     maxHealth: 20
     currentHealth: 0

@@ -2698,6 +2698,8 @@ MonoBehaviour:
   detectionRadius: 10
   detectionAngle: 60
   attackPower: 0
+  damageTextPrefab: {fileID: 8495764086983971465, guid: 28cd990bb68ecfd4f83c93c263b143e1, type: 3}
+  healthBarTransform: {fileID: 106999499}
   stats: {fileID: 11400000, guid: 4c27a6651eb23e8468c1447450051885, type: 2}
   condition: {fileID: 0}
 --- !u!114 &1387362743
