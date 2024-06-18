@@ -47,7 +47,7 @@ public class Monster : MonoBehaviour, IDamagable
         {
             float zIncrement = Random.Range(minZIncrement, maxZIncrement);
             float posX = Random.Range(14f, 18f);
-            Vector3 initialPosition = new Vector3(posX, 2.86f, currentZ + i * zIncrement);
+            Vector3 initialPosition = new Vector3(posX, 1.31f, currentZ + i * zIncrement);
             SpawnMonster(initialPosition);
         }
     }
@@ -108,4 +108,5 @@ public class Monster : MonoBehaviour, IDamagable
         stats.SetAttackValue(initialAttackPower);
         UpdateAttackPower();
     }
+
 }
