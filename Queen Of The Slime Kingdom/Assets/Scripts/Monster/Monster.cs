@@ -8,8 +8,8 @@ public class Monster : MonoBehaviour, IDamagable
     [Header("SerializeField")]
     [SerializeField] private string monsterTag = "Monster";
     [SerializeField] private float initialZ = 25.08f;
-    [SerializeField] private float minZIncrement = 15f;
-    [SerializeField] private float maxZIncrement = 20f;
+    [SerializeField] private float minZIncrement = 20f;
+    [SerializeField] private float maxZIncrement = 40f;
 
     [Header("Info")]
     public MonsterStats stats;
@@ -46,7 +46,7 @@ public class Monster : MonoBehaviour, IDamagable
         for (int i = 0; i < objectPool.PoolDictionary[monsterTag].Count; i++)
         {
             float zIncrement = Random.Range(minZIncrement, maxZIncrement);
-            float posX = Random.Range(13.35f, 18.9f);
+            float posX = Random.Range(14f, 18f);
             Vector3 initialPosition = new Vector3(posX, 2.86f, currentZ + i * zIncrement);
             SpawnMonster(initialPosition);
         }
@@ -95,7 +95,7 @@ public class Monster : MonoBehaviour, IDamagable
         }
         // 다음 몬스터 생성 위치 설정
         float zIncrement = Random.Range(minZIncrement, maxZIncrement);
-        float posX = Random.Range(13.35f, 18.9f);
+        float posX = Random.Range(14f, 18f);
         currentZ = maxZ + zIncrement;
         Vector3 nextPosition = new Vector3(posX, 2.86f, currentZ);
         SpawnMonster(nextPosition);
