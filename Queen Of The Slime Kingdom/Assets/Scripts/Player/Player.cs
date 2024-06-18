@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     private PlayerStateMachine stateMachine;
     private Monster monster;
     private Rigidbody rb;
+    private Animator animator;
 
     [Header("EXP")]
     public int currentExperience;
@@ -39,8 +40,9 @@ public class Player : MonoBehaviour
     {
         CharacterManager.Instance.Player = this;
         condition = GetComponent<PlayerCondition>();
+        animator = GetComponent<Animator>();
 
-        stateMachine = new PlayerStateMachine(this, moveSpeed, attackInterval);
+        stateMachine = new PlayerStateMachine(this, animator, moveSpeed, attackInterval);
         rb = GetComponent<Rigidbody>();
         attackPower = stats.attackPower;
         currentExperience = 0;

@@ -5,10 +5,12 @@ using UnityEngine;
 public class PlayerAttackingState : IState
 {
     private PlayerStateMachine stateMachine;
+    private Animator animator;
 
-    public PlayerAttackingState(PlayerStateMachine stateMachine)
+    public PlayerAttackingState(PlayerStateMachine stateMachine, Animator animator)
     {
         this.stateMachine = stateMachine;
+        this.animator = animator;
     }
 
     public void Enter()
@@ -23,6 +25,8 @@ public class PlayerAttackingState : IState
 
     private IEnumerator Attack()
     {
+        // Slash 애니메이션 트리거 설정
+        animator.SetTrigger("Slash");
         yield return new WaitForSeconds(stateMachine.AttackInterval);
     }
 }
